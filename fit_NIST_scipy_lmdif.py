@@ -78,9 +78,14 @@ def NIST_Test(DataSet, start='start2', plot=True):
     diag =  None
     print(" Fit with: ", factor, xtol, ftol, gtol, epsfcn, diag)
 
-    _best, out, ier = _minpack._lmdif(resid, vals, (x, y), 1,
-                                      ftol, xtol, gtol,
-                                      maxfev, epsfcn, factor, diag)
+   # _best, out, ier = _minpack._lmdif(resid, vals, (x, y), 1,
+   #                                   ftol, xtol, gtol,
+   #                                   maxfev, epsfcn, factor, diag)
+    from scipy.optimize import least_squares
+    res = least_squares(resid, vals, args=(x, y), ftol=ftol, xtol=xtol,
+                        gtol=gtol, diff_step = np.sqrt(epsfcn), scaling=1.,
+                        method='dogbox')
+    _best = res.x
 
     digs = Compare_NIST_Results(DataSet, _best, NISTdata)
 
