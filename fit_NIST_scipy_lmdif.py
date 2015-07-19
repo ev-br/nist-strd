@@ -21,7 +21,7 @@ from NISTModels import Models, ReadNistData
 
 try:
     import matplotlib
-    matplotlib.use('WXAgg')
+#    matplotlib.use('WXAgg')
     import pylab
     HASPYLAB = True
 except IOError:
